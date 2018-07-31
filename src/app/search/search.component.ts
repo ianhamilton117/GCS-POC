@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { SearchService } from '../search.service';
+import { SearchResult } from './search-result';
 
 @Component({
   selector: 'app-search',
@@ -9,7 +10,7 @@ import { SearchService } from '../search.service';
 export class SearchComponent implements OnInit {
 
   query = "";
-  searchResults: string[] = [];
+  searchResults: SearchResult[] = [];
 
   constructor(private searchService: SearchService) { }
 
@@ -18,19 +19,7 @@ export class SearchComponent implements OnInit {
   }
 
   onSearch() {
-    this.searchService.search(this.query)
-      .subscribe(
-        (response) => {
-          // for (var item in response.items) {
-          //   this.searchResults.push(item.htmlTitle);
-          // }
-          for (var i = 0; i < response.items.length; i++) {
-            var item = response.items[i];
-            this.searchResults.push(item.htmlTitle);
-          }
-        },
-        (error) => console.log(error)
-      );
+    this.searchResults = this.searchService.search(this.query);
   }
 
   ngOnInit() {

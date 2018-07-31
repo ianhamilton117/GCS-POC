@@ -1,7 +1,10 @@
-<p>
-  search works!
-</p>
-<input type="text" (input)="onUpdateSearchQuery($event)"/>
+<input type="text" (input)="onUpdateSearchQuery($event)" />
 <button class="btn btn-primary" (click)="onSearch()">Search</button>
-<p *ngIf="searchResults.length > 0">Search results:</p>
-<p *ngFor="let result of searchResults">{{ result }}</p>
+<h3 *ngIf="searchResults.length > 0">Search results:</h3>
+<p *ngFor="let result of searchResults">
+  <a [href]="result.link">
+    <b>{{ result.title }}</b>
+    <br/>
+    <span>{{ result.snippet }}</span>
+  </a>
+</p>
