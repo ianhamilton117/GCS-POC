@@ -1,10 +1,13 @@
-<input type="text" (input)="onUpdateSearchQuery($event)" />
-<button class="btn btn-primary" (click)="onSearch()">Search</button>
-<h3 *ngIf="searchResults.length > 0">Search results:</h3>
+<div>
+  <h5>This is the Search Component</h5>
+  <input type="text" (input)="onUpdateSearchQuery($event)" (keyup.enter)="onSearch()"/>
+  <button class="btn btn-primary" (click)="onSearch()">Search</button>
+  <h4 *ngIf="searchResults.length > 0">Search results:</h4>
+</div>
 <p *ngFor="let result of searchResults">
-  <a [href]="result.link">
-    <b>{{ result.title }}</b>
-    <br/>
-    <span>{{ result.snippet }}</span>
-  </a>
+  <a [innerHTML]="result.htmlTitle" [href]="result.link"></a>
+  <br>
+  <span [innerHTML]="result.displayLink" style="color:#008000"></span>
+  <br>
+  <span [innerHTML]="result.htmlSnippet"></span>
 </p>

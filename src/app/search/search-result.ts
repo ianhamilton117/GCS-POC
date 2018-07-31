@@ -1,7 +1,7 @@
 export class SearchResult {
     constructor(
-        public title: string,
-        public snippet: string,
+        public htmlTitle: string,
+        public htmlSnippet: string,
         public link: string,
         public displayLink: string
     ) {}
