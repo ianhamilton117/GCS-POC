@@ -11,20 +11,22 @@ export class SearchService {
 
   searchResults: SearchResult[] = [];
 
-  private urlBuilder = new RestURLBuilder();
-
   constructor(private httpClient: HttpClient) { }
 
   search(query: string): SearchResult[] {
     this.searchResults = [];
+    let urlBuilder = new RestURLBuilder();
+
     let url = "https://www.googleapis.com/customsearch/v1?key=:key&cx=:cx&q=:q" //Format for REST URL
     let key = "AIzaSyDkGQ2TErpTl--zkgGErCh0_XhUFIWQC54"; //Google API key
     let cx = "014722161919417917553:vmkwzgw4l5u"; //Google search engine ID
-    let builder = this.urlBuilder.buildRestURL(url);
+
+    let builder = urlBuilder.buildRestURL(url);
     builder.setQueryParameter('key', key);
     builder.setQueryParameter('cx', cx);
     builder.setQueryParameter('q', query);
     let finalURL = builder.get();
+    
     this.httpClient.get<GCSResponse>(finalURL)
     .subscribe(
       (response) => {
