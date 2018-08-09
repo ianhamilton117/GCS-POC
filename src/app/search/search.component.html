@@ -1,11 +1,13 @@
 <div>
-  <h5>This is the Search Component</h5>
   <input 
     type="text" 
     #searchQueryInput 
     (keyup.enter)="onSearch(searchQueryInput)"/>
   <button class="btn btn-primary" (click)="onSearch(searchQueryInput)">Search</button>
-  <h4 *ngIf="searchResults.length > 0">Search results:</h4>
+  <br>
+  <a routerLink="/advancedSearch">Advanced Search</a>
+  <h4 *ngIf="resultsPresent()">Search results:</h4>
+  <h4 *ngIf="searchResults.length == 0">Your search did not match any results</h4>
 </div>
 <p *ngFor="let result of searchResults">
   <a [innerHTML]="result.htmlTitle" [href]="result.link"></a>

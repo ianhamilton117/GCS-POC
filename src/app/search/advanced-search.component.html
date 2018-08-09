@@ -1,0 +1,91 @@
+<div>
+  <a routerLink="/">Back</a>
+  <div #advSearchQueryInput>
+    <table>
+      <tr>
+        <td>
+          with
+          <b>all</b> of the words
+        </td>
+        <td>
+          <input #reqWords type="text" (keyup.enter)="submit.click()" />
+        </td>
+      </tr>
+      <tr>
+        <td>
+          with the
+          <b>exact phrase</b>
+        </td>
+        <td>
+          <input #exactPhrase type="text" (keyup.enter)="submit.click()" />
+        </td>
+      </tr>
+      <tr>
+        <td>
+          with
+          <b>any</b> of the words
+        </td>
+        <td>
+          <input #anyWords type="text" (keyup.enter)="submit.click()" />
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <b>without</b> the words
+        </td>
+        <td>
+          <input #withoutWords type="text" (keyup.enter)="submit.click()" />
+        </td>
+      </tr>
+      <tr>
+        <td>
+          File Format
+        </td>
+        <td>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <b>Occurences</b>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          Return results where my terms occur
+        </td>
+        <td>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          Number of results per page
+        </td>
+        <td>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          Search all sites
+        </td>
+        <td>
+        </td>
+      </tr>
+      <tr>
+        <td>
+        </td>
+        <td>
+          <button #submit class="btn btn-primary" (click)="onSearch(reqWords, exactPhrase, anyWords, withoutWords)">Search</button>
+        </td>
+      </tr>
+    </table>
+  </div>
+  <h4 *ngIf="resultsPresent()">Search results:</h4>
+  <h4 *ngIf="searchResults.length == 0">Your search did not match any results</h4>
+</div>
+<p *ngFor="let result of searchResults">
+  <a [innerHTML]="result.htmlTitle" [href]="result.link"></a>
+  <br>
+  <span [innerHTML]="result.displayLink" style="color:#008000"></span>
+  <br>
+  <span [innerHTML]="result.htmlSnippet"></span>
+</p>

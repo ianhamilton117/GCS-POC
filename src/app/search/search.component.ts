@@ -9,12 +9,16 @@ import { SearchResult } from './search-result';
 })
 export class SearchComponent implements OnInit {
 
-  searchResults: SearchResult[] = [];
+  searchResults: SearchResult[] = null;
 
   constructor(private searchService: SearchService) { }
 
   onSearch(searchQueryInput: HTMLInputElement) {
     this.searchResults = this.searchService.search(searchQueryInput.value);
+  }
+
+  resultsPresent() {
+    return this.searchResults !== null && this.searchResults.length > 0;
   }
 
   ngOnInit() {
