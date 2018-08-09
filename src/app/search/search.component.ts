@@ -21,6 +21,10 @@ export class SearchComponent implements OnInit {
     return this.searchResults !== null && this.searchResults.length > 0;
   }
 
+  emptyResults() {
+    return this.searchResults !== null && this.searchResults.length == 0;
+  }
+
   ngOnInit() {
 
   }

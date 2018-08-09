@@ -7,7 +7,7 @@
   <br>
   <a routerLink="/advancedSearch">Advanced Search</a>
   <h4 *ngIf="resultsPresent()">Search results:</h4>
-  <h4 *ngIf="searchResults.length == 0">Your search did not match any results</h4>
+  <h4 *ngIf="emptyResults()">Your search did not match any results</h4>
 </div>
 <p *ngFor="let result of searchResults">
   <a [innerHTML]="result.htmlTitle" [href]="result.link"></a>
