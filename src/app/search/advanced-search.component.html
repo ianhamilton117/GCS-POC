@@ -1,5 +1,5 @@
 <div>
-  <a routerLink="/">Back</a>
+  <a routerLink="/">Basic Search</a>
   <div #advSearchQueryInput>
     <table>
       <tr>
@@ -42,50 +42,45 @@
           File Format
         </td>
         <td>
-        </td>
-      </tr>
-      <tr>
-        <td>
-          <b>Occurences</b>
-        </td>
-      </tr>
-      <tr>
-        <td>
-          Return results where my terms occur
-        </td>
-        <td>
-        </td>
-      </tr>
-      <tr>
-        <td>
-          Number of results per page
-        </td>
-        <td>
-        </td>
-      </tr>
-      <tr>
-        <td>
-          Search all sites
-        </td>
-        <td>
+          <select #fileFormat>
+            <option value></option>
+            <option value="pdf">Adobe Acrobat PDF (.pdf)</option>
+            <option value="ps">Adobe Postscript (.ps</option>
+            <option value="doc">Microsoft Word (.doc)</option>
+            <option value="xls">Microsoft Excel (.xls)</option>
+            <option value="ppt">Microsoft Powerpoint (.ppt)</option>
+            <option value="rtf">Rich Text Format (.rtf)</option>
+          </select>
         </td>
       </tr>
       <tr>
         <td>
         </td>
         <td>
-          <button #submit class="btn btn-primary" (click)="onSearch(reqWords, exactPhrase, anyWords, withoutWords)">Search</button>
+          <button #submit class="btn btn-primary" (click)="onSearch(reqWords, exactPhrase, anyWords, withoutWords, fileFormat, 1)">Search</button>
         </td>
       </tr>
     </table>
   </div>
-  <h4 *ngIf="resultsPresent()">Search results:</h4>
   <h4 *ngIf="emptyResults()">Your search did not match any results</h4>
 </div>
-<p *ngFor="let result of searchResults">
-  <a [innerHTML]="result.htmlTitle" [href]="result.link"></a>
-  <br>
-  <span [innerHTML]="result.displayLink" style="color:#008000"></span>
-  <br>
-  <span [innerHTML]="result.htmlSnippet"></span>
-</p>
+<div *ngIf="resultsPresent()">
+  <h4>Search results:</h4>
+  <p *ngFor="let result of searchResults.results">
+    <a [innerHTML]="result.htmlTitle" [href]="result.link"></a>
+    <br>
+    <span [innerHTML]="result.displayLink" style="color:#008000"></span>
+    <br>
+    <span [innerHTML]="result.htmlSnippet"></span>
+  </p>
+  <p>Page:
+    <span *ngFor="let page of Array(searchResults.numPages); index as i">
+      <span *ngIf="searchResults.currentPage != i + 1; else noLink">
+        <a class="search-page-link" [innerHTML]="i + 1" (click)="onSearch(reqWords, exactPhrase, anyWords, withoutWords, fileFormat, i + 1)"></a>
+      </span>
+      <ng-template #noLink>
+        <span class="current-search-page" [innerHTML]="i + 1"></span>
+      </ng-template>
+    </span>
+  </p>
+</div>

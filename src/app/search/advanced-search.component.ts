@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { SearchService } from '../search.service';
-import { SearchResult } from './search-result';
+import { SearchResults } from './search-results';
 
 @Component({
   selector: 'app-advanced-search',
@@ -9,21 +9,26 @@ import { SearchResult } from './search-result';
 })
 export class AdvancedSearchComponent implements OnInit {
 
-  searchResults: SearchResult[] = null;
+  searchResults: SearchResults = null;
 
   constructor(private searchService: SearchService) { }
 
-  onSearch(reqWords: HTMLInputElement, exactPhrase: HTMLInputElement, anyWords: HTMLInputElement, withoutWords: HTMLInputElement, ) {
+  onSearch(reqWords: HTMLInputElement, exactPhrase: HTMLInputElement, anyWords: HTMLInputElement, withoutWords: HTMLInputElement, fileFormat: HTMLSelectElement, pageNum: number) {
     //Passes reqWords in place of the query to get around an apparent bug where Google doesn't return any results if only required words are sent
-    this.searchResults = this.searchService.search(reqWords.value, reqWords.value, exactPhrase.value, withoutWords.value, anyWords.value);
+    this.searchResults = this.searchService.search(reqWords.value, pageNum, reqWords.value, exactPhrase.value, withoutWords.value, anyWords.value, fileFormat.value);
   }
 
   resultsPresent() {
-    return this.searchResults !== null && this.searchResults.length > 0;
+    return this.searchResults !== null && this.searchResults.results.length > 0;
   }
 
   emptyResults() {
-    return this.searchResults !== null && this.searchResults.length == 0;
+    return this.searchResults !== null && this.searchResults.results.length == 0;
+  }
+
+  // This is to make the Array constructor visible for use within advanced-search.component.html
+  Array(num) {
+    return Array(num);
   }
 
   ngOnInit() {

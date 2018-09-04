@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { SearchService } from '../search.service';
-import { SearchResult } from './search-result';
+import { SearchResults } from './search-results';
 
 @Component({
   selector: 'app-search',
@@ -9,20 +9,25 @@ import { SearchResult } from './search-result';
 })
 export class SearchComponent implements OnInit {
 
-  searchResults: SearchResult[] = null;
+  searchResults: SearchResults = null;
 
   constructor(private searchService: SearchService) { }
 
-  onSearch(searchQueryInput: HTMLInputElement) {
-    this.searchResults = this.searchService.search(searchQueryInput.value);
+  onSearch(searchQueryInput: HTMLInputElement, pageNum: number = 1) {
+    this.searchResults = this.searchService.search(searchQueryInput.value, pageNum);
   }
 
   resultsPresent() {
-    return this.searchResults !== null && this.searchResults.length > 0;
+    return this.searchResults !== null && this.searchResults.results.length > 0;
   }
 
   emptyResults() {
-    return this.searchResults !== null && this.searchResults.length == 0;
+    return this.searchResults !== null && this.searchResults.results.length == 0;
+  }
+
+  // This is to make the Array constructor visible for use within search.component.html
+  Array(num) {
+    return Array(num);
   }
 
   ngOnInit() {

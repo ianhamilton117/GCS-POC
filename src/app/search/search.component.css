@@ -4,3 +4,13 @@ div {
 p {
     margin-left: 20px;
 }
+
+.current-search-page {
+    margin: 5px;
+    text-decoration: underline;
+}
+
+.search-page-link {
+    cursor: pointer;
+    margin: 5px;
+}
