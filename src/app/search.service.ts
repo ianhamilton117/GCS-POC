@@ -45,7 +45,10 @@ export class SearchService {
     .subscribe(
       (response) => {
         const numResults = response.queries.request[0].totalResults;
-        if (numResults == 0) return searchResults;
+        if (numResults == 0) {
+          searchResults.numPages = -1; //Signifys a response with no results
+          return searchResults;
+        }
 
         //Calculate the number of pages required to fit all results, with a max of 100 results (Google won't return any results past 100)
         const numPages = Math.floor((Math.min(numResults, 100) - 1) / resultsPerPage) + 1;

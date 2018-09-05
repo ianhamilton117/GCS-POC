@@ -23,7 +23,7 @@ export class AdvancedSearchComponent implements OnInit {
   }
 
   emptyResults() {
-    return this.searchResults !== null && this.searchResults.results.length == 0;
+    return this.searchResults !== null && this.searchResults.numPages == -1;
   }
 
   // This is to make the Array constructor visible for use within advanced-search.component.html
