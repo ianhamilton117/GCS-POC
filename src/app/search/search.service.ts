@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { SearchResult, SearchResults } from './search/search-results/search-results';
-import { GCSResponse } from './search/gcs-response';
+import { SearchResult, SearchResults } from './search-results/search-results';
+import { GCSResponse } from './gcs-response';
 import { RestURLBuilder } from 'rest-url-builder';
 
 @Injectable({
