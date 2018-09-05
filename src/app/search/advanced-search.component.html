@@ -76,7 +76,7 @@
   <p>Page:
     <span *ngFor="let page of Array(searchResults.numPages); index as i">
       <span *ngIf="searchResults.currentPage != i + 1; else noLink">
-        <a class="search-page-link" [innerHTML]="i + 1" (click)="onSearch(reqWords, exactPhrase, anyWords, withoutWords, fileFormat, i + 1)"></a>
+        <a class="search-page-link" [innerHTML]="i + 1" (click)="onPageNav(i + 1)"></a>
       </span>
       <ng-template #noLink>
         <span class="current-search-page" [innerHTML]="i + 1"></span>

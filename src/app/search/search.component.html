@@ -1,6 +1,6 @@
 <div>
-  <input type="text" #searchQueryInput (keyup.enter)="onSearch(searchQueryInput)" />
-  <button class="btn btn-primary" (click)="onSearch(searchQueryInput)">Search</button>
+  <input type="text" #searchQueryInput (keyup.enter)="submit.click()" />
+  <button #submit class="btn btn-primary" (click)="onSearch(searchQueryInput)">Search</button>
   <br>
   <a routerLink="/advancedSearch">Advanced Search</a>
   <h4 *ngIf="emptyResults()">Your search did not match any results</h4>
@@ -17,7 +17,7 @@
   <p>Page:
     <span *ngFor="let page of Array(searchResults.numPages); index as i">
       <span *ngIf="searchResults.currentPage != i + 1; else noLink">
-        <a class="search-page-link" [innerHTML]="i + 1" (click)="onSearch(searchQueryInput, i + 1)"></a>
+        <a class="search-page-link" [innerHTML]="i + 1" (click)="onPageNav(i + 1)"></a>
       </span>
       <ng-template #noLink>
         <span class="current-search-page" [innerHTML]="i + 1"></span>
