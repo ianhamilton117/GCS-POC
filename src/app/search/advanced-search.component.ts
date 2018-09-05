@@ -13,10 +13,8 @@ export class AdvancedSearchComponent implements OnInit {
 
   constructor(private searchService: SearchService) { }
 
-  onSearch(reqWords: HTMLInputElement, exactPhrase: HTMLInputElement, anyWords: HTMLInputElement, withoutWords: HTMLInputElement, fileFormat: HTMLSelectElement, pageNum: number) {
-    //Passes reqWords in place of the query to get around an apparent bug where Google doesn't return any results if only required words are sent
-    //TODO: Move that logic into the search service
-    this.searchResults = this.searchService.search(reqWords.value, reqWords.value, exactPhrase.value, withoutWords.value, anyWords.value, fileFormat.value);
+  onSearch(reqWords: HTMLInputElement, exactPhrase: HTMLInputElement, anyWords: HTMLInputElement, withoutWords: HTMLInputElement, fileFormat: HTMLSelectElement) {
+    this.searchResults = this.searchService.advancedSearch(reqWords.value, exactPhrase.value, withoutWords.value, anyWords.value, fileFormat.value);
   }
 
   onPageNav(pageNum: number) {

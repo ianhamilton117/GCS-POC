@@ -14,7 +14,7 @@ export class SearchComponent implements OnInit {
   constructor(private searchService: SearchService) { }
 
   onSearch(searchQueryInput: HTMLInputElement, pageNum: number = 1) {
-    this.searchResults = this.searchService.search(searchQueryInput.value);
+    this.searchResults = this.searchService.basicSearch(searchQueryInput.value);
   }
 
   onPageNav(pageNum: number) {

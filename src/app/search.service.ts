@@ -16,8 +16,14 @@ export class SearchService {
   //remembers the original query rather than pulling it off of the form on the page again.
   searchRequest: SearchRequest;
 
-  search(query: string, reqWords?: string, reqPhrase?: string, exclWords?: string, orTerms?: string, fileType?: string): SearchResults {
-    this.searchRequest = new SearchRequest(query, reqWords, reqPhrase, exclWords, orTerms, fileType);
+  advancedSearch(reqWords?: string, reqPhrase?: string, exclWords?: string, orTerms?: string, fileType?: string): SearchResults {
+    //Passes reqWords in place of the query to get around an apparent bug where Google doesn't return any results if only required words are sent
+    this.searchRequest = new SearchRequest(reqWords, reqWords, reqPhrase, exclWords, orTerms, fileType);
+    return this.executeSearch(this.searchRequest, 1);
+  }
+
+  basicSearch(query: string): SearchResults {
+    this.searchRequest = new SearchRequest(query);
     return this.executeSearch(this.searchRequest, 1);
   }
 
@@ -56,7 +62,7 @@ export class SearchService {
         (response) => {
           const numResults = response.queries.request[0].totalResults;
           if (numResults == 0) {
-            searchResults.numPages = -1; //Signifys a response with no results
+            searchResults.numPages = -1; //Signifies a response with no results
             return searchResults;
           }
 
