@@ -1,0 +1,23 @@
+<div *ngIf="emptyResults()">
+    <h4>Your search did not match any results</h4>
+  </div>
+  <div *ngIf="resultsPresent()">
+    <h4>Search results:</h4>
+    <p *ngFor="let result of searchResults.results">
+      <a [innerHTML]="result.htmlTitle" [href]="result.link"></a>
+      <br>
+      <span [innerHTML]="result.displayLink" style="color:#008000"></span>
+      <br>
+      <span [innerHTML]="result.htmlSnippet"></span>
+    </p>
+    <p>Page:
+      <span *ngFor="let page of Array(searchResults.numPages); index as i">
+        <span *ngIf="searchResults.currentPage != i + 1; else noLink">
+          <a class="search-page-link" [innerHTML]="i + 1" (click)="onPageNav(i + 1)"></a>
+        </span>
+        <ng-template #noLink>
+          <span class="current-search-page" [innerHTML]="i + 1"></span>
+        </ng-template>
+      </span>
+    </p>
+  </div>

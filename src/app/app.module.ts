@@ -7,6 +7,7 @@ import { AppComponent } from './app.component';
 import { SearchComponent } from './search/search.component';
 import { SearchService } from './search.service';
 import { AdvancedSearchComponent } from './search/advanced-search.component';
+import { SearchResultsComponent } from './search/search-results/search-results.component';
 
 const appRoutes: Routes = [
   { path: '', component: SearchComponent },
@@ -17,7 +18,8 @@ const appRoutes: Routes = [
   declarations: [
     AppComponent,
     SearchComponent,
-    AdvancedSearchComponent
+    AdvancedSearchComponent,
+    SearchResultsComponent
   ],
   imports: [
     BrowserModule,

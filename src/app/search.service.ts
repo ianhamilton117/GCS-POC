@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { SearchResult, SearchResults } from './search/search-results';
+import { SearchResult, SearchResults } from './search/search-results/search-results';
 import { GCSResponse } from './search/gcs-response';
 import { RestURLBuilder } from 'rest-url-builder';
 
@@ -89,11 +89,11 @@ export class SearchService {
 
 class SearchRequest {
   constructor(
-    public query: string,
-    public reqWords?: string,
-    public reqPhrase?: string,
-    public exclWords?: string,
-    public orTerms?: string,
-    public fileType?: string
+    readonly query: string,
+    readonly reqWords?: string,
+    readonly reqPhrase?: string,
+    readonly exclWords?: string,
+    readonly orTerms?: string,
+    readonly fileType?: string
   ) {}
 }

@@ -1,19 +1,6 @@
 div {
     margin: 20px;
 }
-p {
-    margin-left: 20px;
-}
 td {
     padding: .5em;
-}
-
-.current-search-page {
-    margin: 5px;
-    text-decoration: underline;
-}
-
-.search-page-link {
-    cursor: pointer;
-    margin: 5px;
 }
