@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { SearchResults } from './search-results';
+import { SearchResults } from '../search-results';
 import { SearchService } from '../search.service';
 
 @Component({
@@ -17,12 +17,16 @@ export class SearchResultsComponent implements OnInit {
     this.searchResults = this.searchService.pageNav(pageNum);
   }
 
-  resultsPresent() {
-    return this.searchResults !== null && this.searchResults.results.length > 0;
-  }
-
-  emptyResults() {
-    return this.searchResults !== null && this.searchResults.numPages == -1;
+  status() {
+    if (this.searchResults === null) return "noSearch";
+    switch (this.searchResults.numPages) {
+      case 0:
+        return "resultsLoading";
+      case -1:
+        return "emptyResults";
+      default:
+        return "resultsPresent";
+    }
   }
 
   // This is to make the Array constructor visible for use within advanced-search.component.html
