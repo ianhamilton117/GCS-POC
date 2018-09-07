@@ -1,10 +1,10 @@
-<div *ngIf="status() === 'emptyResults'">
+<div *ngIf="status() === 'EMPTY_RESULTS'">
   <h4>Your search did not match any results</h4>
 </div>
-<div *ngIf="status() === 'resultsLoading'">
+<div *ngIf="status() === 'RESULTS_LOADING'">
   <h4>Loading...</h4>
 </div>
-<div *ngIf="status() === 'resultsPresent'">
+<div *ngIf="status() === 'RESULTS_PRESENT'">
   <h4>Search results:</h4>
   <p *ngFor="let result of searchResults.results">
     <a [innerHTML]="result.htmlTitle" [href]="result.link"></a>

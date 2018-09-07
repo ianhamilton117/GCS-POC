@@ -18,15 +18,8 @@ export class SearchResultsComponent implements OnInit {
   }
 
   status() {
-    if (this.searchResults === null) return "noSearch";
-    switch (this.searchResults.numPages) {
-      case 0:
-        return "resultsLoading";
-      case -1:
-        return "emptyResults";
-      default:
-        return "resultsPresent";
-    }
+    if (this.searchResults === null) return null;
+    else return this.searchResults.status;
   }
 
   // This is to make the Array constructor visible for use within advanced-search.component.html
