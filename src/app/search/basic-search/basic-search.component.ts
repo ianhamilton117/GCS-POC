@@ -13,8 +13,8 @@ export class BasicSearchComponent implements OnInit {
 
   constructor(private searchService: SearchService) { }
 
-  onSearch(searchQueryInput: HTMLInputElement, pageNum: number = 1) {
-    this.searchResults = this.searchService.basicSearch(searchQueryInput.value);
+  onSearch(searchQueryInput: string) {
+    this.searchResults = this.searchService.basicSearch(searchQueryInput);
   }
 
   ngOnInit() {

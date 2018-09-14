@@ -13,8 +13,8 @@ export class AdvancedSearchComponent implements OnInit {
 
   constructor(private searchService: SearchService) { }
 
-  onSearch(reqWords: HTMLInputElement, exactPhrase: HTMLInputElement, anyWords: HTMLInputElement, withoutWords: HTMLInputElement, fileFormat: HTMLSelectElement) {
-    this.searchResults = this.searchService.advancedSearch(reqWords.value, exactPhrase.value, withoutWords.value, anyWords.value, fileFormat.value);
+  onSearch(reqWords: string, exactPhrase: string, anyWords: string, withoutWords: string, fileFormat: string) {
+    this.searchResults = this.searchService.advancedSearch(reqWords, exactPhrase, withoutWords, anyWords, fileFormat);
   }
 
   ngOnInit() {

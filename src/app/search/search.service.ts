@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { SearchResult, SearchResults, SearchStatus } from './search-results';
 import { GCSResponse } from './gcs-response';
 import { RestURLBuilder } from 'rest-url-builder';
-import { takeWhile, expand, take } from 'rxjs/operators';
+import { takeWhile, expand } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 
 @Injectable({

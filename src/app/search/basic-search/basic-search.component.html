@@ -1,6 +1,6 @@
 <div>
   <input type="text" #searchQueryInput (keyup.enter)="submit.click()" />
-  <button #submit class="btn btn-primary" (click)="onSearch(searchQueryInput)">Search</button>
+  <button #submit class="btn btn-primary" (click)="onSearch(searchQueryInput.value)">Search</button>
   <br>
   <a routerLink="/advancedSearch">Advanced Search</a>
 </div>
