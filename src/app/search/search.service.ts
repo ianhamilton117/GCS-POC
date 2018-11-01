@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { SearchResult, SearchResults, SearchStatus } from './search-results';
 import { GCSResponse } from './gcs-response';
-import { RestURLBuilder } from 'rest-url-builder';
 import { takeWhile, expand } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 
@@ -12,6 +11,8 @@ import { Observable } from 'rxjs';
 export class SearchService {
 
   constructor(private httpClient: HttpClient) { }
+
+  url = "https://www.googleapis.com/customsearch/v1";
 
   //The search request is being stored as a property so that it persists after search results are returned.
   //This way, when the user navigates to a different page of the search results, the search service
@@ -75,14 +76,14 @@ export class SearchService {
 
   callAPI(req: SearchRequest): Observable<GCSResponse> {
     let foundResults = false;
-    return this.httpClient.get<GCSResponse>(this.buildURL(req))
+    return this.httpClient.get<GCSResponse>(this.url, {params: this.buildParams(req)})
       .pipe(
         expand(res => {
           //If the page requested doesn't have any results, we try again with the previous page. 
           //This is neccessary because Google's API sometimes promises more results than it actually has.
           if (res.queries.request[0].totalResults == 0 && req.pageNum > 1) {
             req.pageNum--;
-            return this.httpClient.get<GCSResponse>(this.buildURL(req));
+            return this.httpClient.get<GCSResponse>(this.url, {params: this.buildParams(req)});
           } else {
             foundResults = true;
             return [];
@@ -92,39 +93,32 @@ export class SearchService {
       )
   }
 
-  buildURL(req: SearchRequest): string {
-    const urlBuilder = new RestURLBuilder();
-
-    const url = "https://www.googleapis.com/customsearch/v1?key=:key&cx=:cx&q=:q&hq=:hq&exactTerms=:exactTerms&excludeTerms=:excludeTerms&orTerms=:orTerms&fileType=:fileType&start=:start" //Blueprint for REST URL
+  buildParams(req: SearchRequest): HttpParams {
     // const key = "AIzaSyBlPeSIOgT_wPjyjWFnqTW3l9L2A3ZY9GA"; //Google API key
     // const cx = "001477481991178287809:r-wouyqyxew"; //Google search engine ID
     const key = "AIzaSyBqcrX7zwelHrLUsH0R8KOI-aMCTlnrp3g"; //Google API key
     const cx = "014722161919417917553:vmkwzgw4l5u"; //Google search engine ID
 
-    //Calculate which result will be the first result on a given page. 1 for page 1, 11 for page 2, 22 for page 3, etc.
+    // Calculate which result will be the first result on a given page. 1 for page 1, 11 for page 2, 22 for page 3, etc.
     const startIndex = String(this.resultsPerPage * (req.pageNum - 1) + 1)
 
-    const builder = urlBuilder.buildRestURL(url);
-    builder.setQueryParameter('key', key);
-    builder.setQueryParameter('cx', cx);
-    builder.setQueryParameter('q', req.query);
-    builder.setQueryParameter('hq', req.reqWords);
-    builder.setQueryParameter('exactTerms', req.reqPhrase);
-    builder.setQueryParameter('excludeTerms', req.exclWords);
-    builder.setQueryParameter('orTerms', req.orTerms);
-    builder.setQueryParameter('fileType', req.fileType);
-    builder.setQueryParameter('start', startIndex);
+    let params = new HttpParams();
+    params = params.set('key', key);
+    params = params.set('cx', cx);
+    // If the search query was empty, add it as a parameter anyway with an empty string so that the API is happy
+    // This is a valid situation when using Advanced Search
+    params = req.query ? params.set('q', req.query) : params.set('q', '');
+    // Set the rest of the parameters only if they were provided
+    params = req.reqWords ? params.set('hq', req.reqWords) : params;
+    params = req.reqPhrase ? params.set('exactTerms', req.reqPhrase) : params;
+    params = req.exclWords ? params.set('excludeTerms', req.exclWords) : params;
+    params = req.orTerms ? params.set('orTerms', req.orTerms) : params;
+    params = req.fileType ? params.set('fileType', req.fileType) : params;
+    params = startIndex ? params.set('start', startIndex) : params;
 
-    let finalURL = builder.get();
-    //If the search query was empty, add it in the url anyway so that the API is happy
-    //This is a valid situation when using Advanced Search
-    if (!req.query) {
-      finalURL += "&q=";
-    }
-
-    return finalURL;
+    return params;
   }
-  
+
 }
 
 class SearchRequest {

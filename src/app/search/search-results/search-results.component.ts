@@ -22,7 +22,7 @@ export class SearchResultsComponent implements OnInit {
     else return this.searchResults.status;
   }
 
-  // This is to make the Array constructor visible for use within advanced-search.component.html
+  // This is to make the Array constructor visible for use within search-results.component.html
   Array(num) {
     return Array(num);
   }
